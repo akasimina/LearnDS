@@ -29,8 +29,8 @@ int RecursiveCountN(Ball* pointer, char data){
 }
 
 int RecursiveCountP(Ball* pointer, char data){
-    if( pointer->data != data ) return 0;
-    return RecursiveCountN(pointer->pri, data) + 1;
+    if( pointer == NULL || pointer->data != data ) return 0;
+    return RecursiveCountP(pointer->pri, data) + 1;
 }
 
 
@@ -38,16 +38,14 @@ Ball* DeleteIt(Ball* pointer){
     Ball *priri = pointer->pri;
     char data = pointer->data;
     
-    if( (RecursiveCountN(pointer, pointer->data) + RecursiveCountP(pointer, pointer->data) - 1) > 2 ){
-        while(priri->data == data ) { priri = priri->pri; delete priri->next;}
-        while( pointer->data == data ) {
-            if( pointer->next == NULL ) {delete pointer; pointer = NULL; break;}
-            pointer = pointer->next;
-            delete pointer->pri;
-        }
-        priri->next = pointer;
-        if( pointer != NULL) pointer->pri = priri;
+    while(priri->data == data ) { priri = priri->pri; delete priri->next;}
+    while( pointer->data == data ) {
+        if( pointer->next == NULL ) {delete pointer; pointer = NULL; break;}
+        pointer = pointer->next;
+        delete pointer->pri;
     }
+    priri->next = pointer;
+    if( pointer != NULL) pointer->pri = priri;
         
     return priri;
 }
