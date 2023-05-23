@@ -52,4 +52,11 @@ void HuffmanCoding(int n, HTNode *&HuffmanTree, int *weight, string *code){
 }
 
 
+int DeCode(HTNode *HuffmanTree, string Decoded, int n, int *weight){
+    int m = 2 * n - 1;
+    for( char c : Decoded )
+        if( c == '0' ) m = HuffmanTree[m].lchild;
+        else if( c == '1' ) m = HuffmanTree[m].rchild;
+    return weight[m - 1];
+}
 
